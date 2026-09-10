@@ -81,4 +81,14 @@ def score_word(word):
     return score
 
 def get_highest_word_score(word_list):
-    pass
+
+    # Helper function to calculate max
+    def max_number(nums):
+
+        max_num = nums[0]
+
+        for n in nums:
+            if n > max_num:
+                max_num = n
+
+        return max_num
