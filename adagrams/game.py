@@ -85,6 +85,9 @@ def get_highest_word_score(word_list):
     # Helper function to calculate max
     def max_number(nums):
 
+        if not nums:
+            return None
+
         max_num = nums[0]
 
         for n in nums:
@@ -96,6 +99,9 @@ def get_highest_word_score(word_list):
     # Helper function to calculate min
     def min_number(nums):
 
+        if not nums:
+            return None
+
         min_num = nums[0]
 
         for n in nums:
@@ -103,3 +109,70 @@ def get_highest_word_score(word_list):
                 min_num = n
 
         return min_num
+
+    # def count_number(nums, num):
+
+    #     count = 0
+
+    #     for n in nums:
+
+    #         if n == num:
+    #             count += 1      
+
+    #     return count
+
+    word_scores = []
+    word_names = []
+    word_lengths = []
+
+    for word in word_list:
+
+        score = score_word(word)
+        word_names.append(word)
+        word_scores.append(score)
+        word_lengths.append(len(word))
+
+    # Computing the highest score among the words
+
+    for i in range(len(word_list)):
+
+        if len(word_scores) == len(set(word_scores)):
+
+            highest_score = max_number(word_scores)
+
+            if word_scores[i] == highest_score:
+
+                word = word_names[i]
+
+                break
+
+        else:
+
+            if word_lengths[i] == 10:
+
+                highest_score = word_scores[i]
+                word = word_names[i]
+
+                break
+
+            elif len(word_lengths) == len(set(word_lengths)):
+
+                if word_lengths[i] == min_number(word_lengths):
+
+                    highest_score = word_scores[i]
+                    word = word_names[i]
+
+                    break
+
+            # else:
+
+            #     highest_score = max_number(word_scores)
+
+            #     if word_scores[i] == highest_score:
+
+            #         word = word_names[i]
+
+            #         break
+
+
+    return (word, highest_score)
