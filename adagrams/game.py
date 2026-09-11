@@ -82,48 +82,16 @@ def score_word(word):
 
 def get_highest_word_score(word_list):
 
-    # Helper function to calculate max
-    def max_number(nums):
-
-        if not nums:
-            return None
-
-        max_num = nums[0]
-
-        for n in nums:
-            if n > max_num:
-                max_num = n
-
-        return max_num
-
-    # Helper function to calculate min
-    def min_number(nums):
-
-        if not nums:
-            return None
-
-        min_num = nums[0]
-
-        for n in nums:
-            if n < min_num:
-                min_num = n
-
-        return min_num
-
-    # def count_number(nums, num):
-
-    #     count = 0
-
-    #     for n in nums:
-
-    #         if n == num:
-    #             count += 1      
-
-    #     return count
+    highest_score = 0
 
     word_scores = []
     word_names = []
     word_lengths = []
+
+    word_scores_ties = []
+    word_names_ties = []
+    word_lengths_ties = []
+
 
     for word in word_list:
 
@@ -134,45 +102,69 @@ def get_highest_word_score(word_list):
 
     # Computing the highest score among the words
 
-    for i in range(len(word_list)):
+    if len(word_scores) == len(set(word_scores)):
 
-        if len(word_scores) == len(set(word_scores)):
+        highest_score = max_number(word_scores)
 
+        for i in range(len(word_list)):
             highest_score = max_number(word_scores)
 
             if word_scores[i] == highest_score:
 
                 word = word_names[i]
+    else:
 
-                break
+        max_score = max_number(word_scores)
 
-        else:
+        for i in range(len(word_list)):
 
-            if word_lengths[i] == 10:
+            if word_scores[i] == max_score:
+                word_names_ties.append(word_names[i])
+                word_scores_ties.append(word_scores[i])
+                word_lengths_ties.append(word_lengths[i])
 
-                highest_score = word_scores[i]
-                word = word_names[i]
 
-                break
-
-            elif len(word_lengths) == len(set(word_lengths)):
-
-                if word_lengths[i] == min_number(word_lengths):
-
-                    highest_score = word_scores[i]
-                    word = word_names[i]
-
+        if 10 in word_lengths_ties:
+            for i in range(len(word_names_ties)):
+                if word_lengths_ties[i] == 10:
+                    word = word_names_ties[i]
+                    highest_score = max_score
                     break
 
-            # else:
+        else:
+            min_length = min_number(word_lengths_ties)
 
-            #     highest_score = max_number(word_scores)
-
-            #     if word_scores[i] == highest_score:
-
-            #         word = word_names[i]
-
-            #         break
-
+            for i in range(len(word_names_ties)):
+                if word_lengths_ties[i] == min_length:
+                    word = word_names_ties[i]
+                    highest_score = max_score
 
     return (word, highest_score)
+
+# Helper function to calculate max
+def max_number(nums):
+
+    if not nums:
+        return None
+
+    max_num = nums[0]
+
+    for n in nums:
+        if n > max_num:
+            max_num = n
+
+    return max_num
+
+# Helper function to calculate min
+def min_number(nums):
+
+    if not nums:
+        return None
+
+    min_num = nums[0]
+
+    for n in nums:
+        if n < min_num:
+            min_num = n
+
+    return min_num
