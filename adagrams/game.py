@@ -92,3 +92,14 @@ def get_highest_word_score(word_list):
                 max_num = n
 
         return max_num
+
+    # Helper function to calculate min
+    def min_number(nums):
+
+        min_num = nums[0]
+
+        for n in nums:
+            if n < min_num:
+                min_num = n
+
+        return min_num
