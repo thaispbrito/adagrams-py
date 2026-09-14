@@ -109,17 +109,17 @@ def score_word(word):
         "K": 5, "J": 8, "X": 8, "Q": 10, "Z": 10
     }
 
-    final_score = 0
+    score = 0
 
     for letter in word.upper():
 
         if letter in SCORE_DISTRIBUTION:
-            final_score += SCORE_DISTRIBUTION[letter]
+            score += SCORE_DISTRIBUTION[letter]
 
     if 6 < len(word) < 11:
-        final_score += 8
+        score += 8
 
-    return final_score
+    return score
 
 def get_highest_word_score(word_list):
 
