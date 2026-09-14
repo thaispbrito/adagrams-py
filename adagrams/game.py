@@ -1,32 +1,29 @@
 from random import randint
 
-# Helper function to calculate max
-def max_number(nums):
+# Helper function to calculate max value
+def max_number(nums_dict):
+    """This function was created
+    to help calculate the highest score 
+    for the Adagrams game. 
 
-    if not nums:
+    Since there are no negative scores,
+    this function was implemented to accept 
+    only numbers >= 0.
+    
+    Input: dictionary with scores as keys
+    Output: the max key
+    """
+
+    if not nums_dict:
         return None
 
-    max_num = nums[0]
+    max_num = 0
 
-    for n in nums:
-        if n > max_num:
-            max_num = n
+    for num in nums_dict:
+        if num > max_num:
+            max_num = num
 
     return max_num
-
-# Helper function to calculate min
-def min_number(nums):
-
-    if not nums:
-        return None
-
-    min_num = nums[0]
-
-    for n in nums:
-        if n < min_num:
-            min_num = n
-
-    return min_num
 
 def draw_letters():
 
@@ -122,60 +119,35 @@ def score_word(word):
     return score
 
 def get_highest_word_score(word_list):
-
-    highest_score = 0
-
-    word_scores = []
-    word_names = []
-    word_lengths = []
-
-    word_scores_ties = []
-    word_names_ties = []
-    word_lengths_ties = []
-
+ 
+    word_info = {}
 
     for word in word_list:
-
         score = score_word(word)
-        word_names.append(word)
-        word_scores.append(score)
-        word_lengths.append(len(word))
+        if score not in word_info:
+            word_info[score] = []
+        word_info[score].append(word)
 
-    # Computing the highest score among the words
+    highest_score = max_number(word_info)
+    word_choice = ""
 
-    if len(word_scores) == len(set(word_scores)):
+    # Check if there are no ties
+    if len(word_info[highest_score]) == 1:
+        word_choice = word_info[highest_score][0]
 
-        highest_score = max_number(word_scores)
-
-        for i in range(len(word_list)):
-
-            if word_scores[i] == highest_score:
-
-                word = word_names[i]
+    # There are ties otherwise
     else:
+        min_length = len(word_info[highest_score][0])
+        word_choice = word_info[highest_score][0]
 
-        max_score = max_number(word_scores)
+        for word_name in word_info[highest_score]:
+            if len(word_name) == 10:
+                word_choice = word_name
+                break    
+            else:  
+                if len(word_name) < min_length:
+                    min_length = len(word_name)
+                    word_choice = word_name
+            
 
-        for i in range(len(word_list)):
-
-            if word_scores[i] == max_score:
-                word_names_ties.append(word_names[i])
-                word_scores_ties.append(word_scores[i])
-                word_lengths_ties.append(word_lengths[i])
-
-        if 10 in word_lengths_ties:
-            for i in range(len(word_names_ties)):
-                if word_lengths_ties[i] == 10:
-                    word = word_names_ties[i]
-                    highest_score = max_score
-                    break
-
-        else:
-            min_length = min_number(word_lengths_ties)
-
-            for i in range(len(word_names_ties)):
-                if word_lengths_ties[i] == min_length:
-                    word = word_names_ties[i]
-                    highest_score = max_score
-
-    return (word, highest_score)
+    return (word_choice, highest_score)
