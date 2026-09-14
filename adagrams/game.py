@@ -108,31 +108,30 @@ def uses_available_letters(word, letter_bank):
 
 def score_word(word):
 
-    SCORE_DISTRIBUTION = [
-        [1, ("A", "E", "I", "O", "U", "L", "N", "R", "S", "T")],
-        [2, ("D", "G")],
-        [3, ("B", "C", "M", "P")],
-        [4, ("F", "H", "V", "W", "Y")],
-        [5, ("K")],
-        [8, ("J", "X")],
-        [10, ("Q", "Z")]
-    ]
+    SCORE_DISTRIBUTION = {
+        1: ("A", "E", "I", "O", "U", "L", "N", "R", "S", "T"),
+        2: ("D", "G"),
+        3: ("B", "C", "M", "P"),
+        4: ("F", "H", "V", "W", "Y"),
+        5: ("K",),
+        8: ("J", "X"),
+        10: ("Q", "Z")
+    }
 
-    score = 0
-
+    final_score = 0
     word_upper = word.upper()
 
-    for char in word_upper:
+    for letter in word_upper:
 
-        for i in range(7):
+        for score, letters in SCORE_DISTRIBUTION.items():
 
-            if char in SCORE_DISTRIBUTION[i][1]:
-                score += SCORE_DISTRIBUTION[i][0]
+            if letter in letters:
+                final_score += score
 
     if 6 < len(word) < 11:
-        score += 8
+        final_score += 8
 
-    return score
+    return final_score
 
 def get_highest_word_score(word_list):
 
