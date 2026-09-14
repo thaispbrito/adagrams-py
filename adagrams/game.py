@@ -89,44 +89,32 @@ def uses_available_letters(word, letter_bank):
         else:
             hand[letter] += 1  
 
-    word_upper = word.upper()
-    word_count = {}         
-    for char in word_upper:
-        if char not in letter_bank:
+    for letter in word.upper():
+        if letter not in hand:
             return False
         else:
-            if char not in word_count:
-                word_count[char] = 1
-            else:
-                word_count[char] += 1 
-
-    for item in word_count:
-        if word_count[item] > hand[item]:
-            return False    
+            if hand[letter] == 0:
+                return False
+            hand[letter] -= 1  
 
     return True  
 
 def score_word(word):
 
     SCORE_DISTRIBUTION = {
-        1: ("A", "E", "I", "O", "U", "L", "N", "R", "S", "T"),
-        2: ("D", "G"),
-        3: ("B", "C", "M", "P"),
-        4: ("F", "H", "V", "W", "Y"),
-        5: ("K",),
-        8: ("J", "X"),
-        10: ("Q", "Z")
+        "A": 1, "E": 1, "I": 1, "O": 1, "U": 1, "L": 1, 
+        "N": 1, "R": 1, "S": 1, "T": 1, "D": 2, 
+        "G": 2, "B": 3, "C": 3, "M": 3, "P": 3,
+        "F": 4, "H": 4, "V": 4, "W": 4, "Y": 4,
+        "K": 5, "J": 8, "X": 8, "Q": 10, "Z": 10
     }
 
     final_score = 0
-    word_upper = word.upper()
 
-    for letter in word_upper:
+    for letter in word.upper():
 
-        for score, letters in SCORE_DISTRIBUTION.items():
-
-            if letter in letters:
-                final_score += score
+        if letter in SCORE_DISTRIBUTION:
+            final_score += SCORE_DISTRIBUTION[letter]
 
     if 6 < len(word) < 11:
         final_score += 8
@@ -160,7 +148,6 @@ def get_highest_word_score(word_list):
         highest_score = max_number(word_scores)
 
         for i in range(len(word_list)):
-            highest_score = max_number(word_scores)
 
             if word_scores[i] == highest_score:
 
