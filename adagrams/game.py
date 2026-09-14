@@ -1,8 +1,36 @@
 from random import randint
 
+# Helper function to calculate max
+def max_number(nums):
+
+    if not nums:
+        return None
+
+    max_num = nums[0]
+
+    for n in nums:
+        if n > max_num:
+            max_num = n
+
+    return max_num
+
+# Helper function to calculate min
+def min_number(nums):
+
+    if not nums:
+        return None
+
+    min_num = nums[0]
+
+    for n in nums:
+        if n < min_num:
+            min_num = n
+
+    return min_num
+
 def draw_letters():
 
-    letters_distribution = {
+    letter_pool = {
         'A': 9, 
         'B': 2, 
         'C': 2, 
@@ -39,14 +67,14 @@ def draw_letters():
         random_num = randint(1, n)
         temp = 0
 
-        for letter, count in letters_distribution.items():
+        for letter, count in letter_pool.items():
 
             temp += count
 
             if temp >= random_num:
 
                 hand.append(letter)
-                letters_distribution[letter] -= 1
+                letter_pool[letter] -= 1
                 n -= 1
                 break
 
@@ -165,31 +193,3 @@ def get_highest_word_score(word_list):
                     highest_score = max_score
 
     return (word, highest_score)
-
-# Helper function to calculate max
-def max_number(nums):
-
-    if not nums:
-        return None
-
-    max_num = nums[0]
-
-    for n in nums:
-        if n > max_num:
-            max_num = n
-
-    return max_num
-
-# Helper function to calculate min
-def min_number(nums):
-
-    if not nums:
-        return None
-
-    min_num = nums[0]
-
-    for n in nums:
-        if n < min_num:
-            min_num = n
-
-    return min_num
