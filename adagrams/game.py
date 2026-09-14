@@ -8,7 +8,7 @@ def max_number(nums_dict):
 
     Since there are no negative scores,
     this function was implemented to accept 
-    only numbers >= 0.
+    only numbers >= 0 (dictionary keys).
     
     Input: dictionary with scores as keys
     Output: the max key
@@ -25,6 +25,7 @@ def max_number(nums_dict):
 
     return max_num
 
+# Wave 1
 def draw_letters():
 
     letter_pool = {
@@ -60,16 +61,13 @@ def draw_letters():
     n = 98
 
     while len(hand) < 10:
-
         random_num = randint(1, n)
         temp = 0
 
         for letter, count in letter_pool.items():
-
             temp += count
 
             if temp >= random_num:
-
                 hand.append(letter)
                 letter_pool[letter] -= 1
                 n -= 1
@@ -77,6 +75,7 @@ def draw_letters():
 
     return hand
 
+# Wave 2
 def uses_available_letters(word, letter_bank):
 
     hand = {}
@@ -96,6 +95,7 @@ def uses_available_letters(word, letter_bank):
 
     return True  
 
+# Wave 3
 def score_word(word):
 
     SCORE_DISTRIBUTION = {
@@ -109,7 +109,6 @@ def score_word(word):
     score = 0
 
     for letter in word.upper():
-
         if letter in SCORE_DISTRIBUTION:
             score += SCORE_DISTRIBUTION[letter]
 
@@ -118,8 +117,9 @@ def score_word(word):
 
     return score
 
+# Wave 4
 def get_highest_word_score(word_list):
- 
+
     word_info = {}
 
     for word in word_list:
@@ -129,18 +129,19 @@ def get_highest_word_score(word_list):
         word_info[score].append(word)
 
     highest_score = max_number(word_info)
+    highest_score_list = word_info[highest_score]
     word_choice = ""
 
     # Check if there are no ties
-    if len(word_info[highest_score]) == 1:
-        word_choice = word_info[highest_score][0]
+    if len(highest_score_list) == 1:
+        word_choice = highest_score_list[0]
 
     # There are ties otherwise
     else:
-        min_length = len(word_info[highest_score][0])
-        word_choice = word_info[highest_score][0]
+        min_length = len(highest_score_list[0])
+        word_choice = highest_score_list[0]
 
-        for word_name in word_info[highest_score]:
+        for word_name in highest_score_list:
             if len(word_name) == 10:
                 word_choice = word_name
                 break    
@@ -149,5 +150,4 @@ def get_highest_word_score(word_list):
                     min_length = len(word_name)
                     word_choice = word_name
             
-
     return (word_choice, highest_score)

@@ -265,5 +265,3 @@ Implement a function called `get_highest_word_score` in `game.py`. This method s
     - prefer the word with the fewest letters...
     - ...unless one word has 10 letters. If the top score is tied between multiple words and one is 10 letters long, choose the one with 10 letters over the one with fewer tiles
     - If the there are multiple words that are the same score and the same length, pick the first one in the supplied list
-
-(test)
